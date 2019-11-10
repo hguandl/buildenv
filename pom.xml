@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.hguandl</groupId>
     <artifactId>buildenv</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <name>Build Environment</name>
     <description>Build environment check for CS205</description>
 

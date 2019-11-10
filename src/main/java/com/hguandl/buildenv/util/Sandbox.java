@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,18 +80,19 @@ public class Sandbox {
 
     public static void cleanup(boolean force) {
         try {
-            for (String s : history) {
-                File f = new File(s);
+            for (Iterator<String> it = history.listIterator(); it.hasNext(); ) {
+                File f = new File(it.next());
                 if (!force && System.currentTimeMillis() - f.lastModified() < LIFE_MILLIS) {
                     continue;
                 }
                 FileUtils.deleteDirectory(f);
-                history.remove(s);
+                it.remove();
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            logger.info(String.format("History cleaned up to %d", history.size()));
         }
-        logger.info(String.format("History cleaned up to %d", history.size()));
     }
 
     public static void setup(long life, int cnt) {
